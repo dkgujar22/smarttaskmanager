@@ -4,25 +4,28 @@ import { useTheme } from '../context/ThemeContext';
 
 const TaskInput = () => {
     
-    const [task,setTask]=useState('');
-    const [priority,setPriority]=useState('');
+    
 
     const {state}=useTheme();
 
-   const {dispatch}=useTask();
-    const handleAdd=()=>{
-        console.log(state);
+    const {state:taskstate,addItem,dispatch,task,setTask,priority,setPriority}=useTask();
+   
+    const handleAdd=async()=>{
+        console.log(taskstate);
+        await addItem(task,priority);
     
-
-        dispatch({
-            type:"ADD_TASK",
-            payload:{
-                task:task,
-                priority:priority
+        // dispatch({
+        //     type:"ADD_TASK",
+        //     payload:{
+        //         task:task,
+        //         priority:priority
             
-            }
-        })
+        //     }
+        // })
     }
+
+   
+    
 
 
   return (

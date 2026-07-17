@@ -14,12 +14,17 @@ function App() {
 
   return (
      <>
+
      {/* <h1>Task management system</h1> */}
      <TaskProvider>
       <ThemeProvider>
+        <div className='container-fluid text-center'>
           <Setting/>
           <TaskInput/>
           <TaskList/>
+
+        </div>
+          
       </ThemeProvider>
      </TaskProvider>
      </>
