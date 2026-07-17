@@ -7,7 +7,10 @@ const TaskList = () => {
     const {state:themestate}=useTheme();
   return (
     <div className={` p-4 ${themestate.mode ? 'bg-dark text-light' : 'bg-white text-dark'}  ${themestate.layout && 'row'}`}>
-          {state.tasks.map((task)=>(
+
+      {state.loading?<h1>loading...</h1>:
+       <>
+        {state.tasks.map((task)=>(
             <div key={task.id} className={` ${themestate.layout && 'col-md-3'}`}>
                 <h4  style={{fontSize:themestate.uipref}}>{task.taskname} {task.priority} {task.time}
 
@@ -24,6 +27,9 @@ const TaskList = () => {
             </div>
             
           ))}
+       </>}
+         
+          <button onClick={()=>console.log(state)}>show tasks</button>
     </div>
   )
 }

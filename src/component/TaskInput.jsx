@@ -25,6 +25,13 @@ const TaskInput = () => {
     }
     const handleEdit=()=>{
         handletableEdit(editid,task,priority);
+        dispatch({
+            type:"HANDLE_BTN"
+        })
+          setTask('')
+        setPriority('')
+
+
 
 
 
