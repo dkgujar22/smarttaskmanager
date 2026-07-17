@@ -8,7 +8,7 @@ const TaskInput = () => {
 
     const {state}=useTheme();
 
-    const {state:taskstate,addItem,dispatch,task,setTask,priority,setPriority}=useTask();
+    const {state:taskstate,addItem,dispatch,task,setTask,priority,setPriority,handletableEdit,editid}=useTask();
    
     const handleAdd=async()=>{
         console.log(taskstate);
@@ -22,6 +22,12 @@ const TaskInput = () => {
             
         //     }
         // })
+    }
+    const handleEdit=()=>{
+        handletableEdit(editid,task,priority);
+
+
+
     }
 
    
@@ -42,8 +48,8 @@ const TaskInput = () => {
         value={priority}
         
         onChange={(e)=>setPriority(e.target.value)}/>
-
-        <button onClick={handleAdd}>ADD</button>
+        {taskstate.setbutton?<button onClick={handleEdit}>EDIT</button>:<button onClick={handleAdd}>ADD</button>}
+        
 
         {/* <button onClick={handletheme}>show theme</button> */}
       

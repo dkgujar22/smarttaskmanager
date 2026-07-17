@@ -3,7 +3,9 @@ import { supabase } from "../SupabaseClient";
 
 const TaskContext=createContext();
 const initialState={
-    tasks:[]
+    tasks:[],
+    setbutton:false
+
 }
 const newdate=new Date();
 const reducer=(state,action)=>{
@@ -18,19 +20,21 @@ const reducer=(state,action)=>{
             //          priority:action.payload.priority,done:false}]
             // }
             return {
-                tasks:action.payload
+                ...state,tasks:action.payload
             };
         case "TOGGLE_TASK":
             return {
-                tasks:state.tasks.map((task)=>(task.id===action.payload?{...task, done:!task.done}:task
+                ...state,tasks:state.tasks.map((task)=>(task.id===action.payload?{...task, done:!task.done}:task
                 ))
             }
         case "DELETE_TASK":
             return {
-                tasks:state.tasks.filter((task)=>
+                ...state,tasks:state.tasks.filter((task)=>
                 task.id!==action.payload
             )
             }
+        case "HANDLE_BTN":
+            return {...state,setbutton:!state.setbutton};    
         default:
             return state         
 
@@ -42,7 +46,9 @@ export const TaskProvider=({children})=>{
 
     const [state,dispatch]=useReducer(reducer,initialState);
     const [task,setTask]=useState('');
+    const [editid,setEditid]=useState('');
     const [priority,setPriority]=useState('');
+
     
    useEffect(()=>{
         const fetchItem=async()=>{
@@ -99,23 +105,38 @@ export const TaskProvider=({children})=>{
         })
 
     }
-    // const getEditItem=async(taskid,taskname,priority)=>{
-
-    //     const {data,error}=await supabase.from('tasklists').update({taskname,priority}).id('id',taskid);
-
-    // }
-    const getEditItem=async(taskid)=>{
-
+   
+    const getEditItem=(taskid)=>{
        const getitem=state.tasks.filter((task)=>task.id===taskid);
-       console.log(getitem); 
+       setEditid(getitem[0].id);
        setTask(getitem[0].taskname);
        setPriority(getitem[0].priority);
+
+
+
+       dispatch({
+        type:"HANDLE_BTN"
+       })
+
+       return getitem;
+    }
+     const handletableEdit=async(taskid,taskname,priority)=>{
+
+        console.log(taskname,priority);
+        
+        const {data,error}=await supabase.from('tasklists').update({taskname,priority}).eq('id',taskid);
+        if(error){
+            alert(error.message);
+        }
+        setTask('')
+        setPriority('')
+
     }
       
    
 
     return(
-        <TaskContext.Provider value={{state,dispatch,addItem,deleteTask,ToggleComplete,getEditItem,task,setTask,priority,setPriority}}>
+        <TaskContext.Provider value={{state,dispatch,addItem,deleteTask,ToggleComplete,getEditItem,handletableEdit,task,setTask,priority,setPriority,editid}}>
             {children}
         </TaskContext.Provider>
     )
