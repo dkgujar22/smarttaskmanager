@@ -8,18 +8,36 @@ const TaskList = () => {
   return (
     <div className={` p-4 ${themestate.mode ? 'bg-dark text-light' : 'bg-white text-dark'}  ${themestate.layout && 'row'}`}>
 
-      {state.loading?<h1>loading...</h1>:
+
+
+      {state.loading?<h1 className='mt-5'>loading...</h1>:
        <>
         {state.tasks.map((task)=>(
             <div key={task.id} className={` ${themestate.layout && 'col-md-3'}`}>
-                <h4  style={{fontSize:themestate.uipref}}>{task.taskname} {task.priority} {task.time}
 
-                 <button onClick={()=>ToggleComplete(task.id,task.done)}>
+              <div className="row">
+                <div className="col-md-6">
+                  <span style={{fontSize:themestate.uipref,maxWidth:'400px'}}>{task.taskname} {task.priority} {task.time}</span>
+                </div>
+                <div className="col-md-6">
+                   <button className='btn btn-success' onClick={()=>ToggleComplete(task.id,task.done)}>
                     {task.done?'completed':'Toggle Complete'}</button>
-                <button onClick={()=>deleteTask(task.id)}>Delete</button> 
-                <button onClick={()=>getEditItem(task.id)}>Edit</button>   
+                <button className='btn btn-danger' onClick={()=>deleteTask(task.id)}>Delete</button> 
+                <button className='btn btn-warning' onClick={()=>getEditItem(task.id)}>Edit</button>  
+                </div>
+              </div>
+
+              {/* <div className='container'>
+                  <span  style={{fontSize:themestate.uipref}}>{task.taskname} {task.priority} {task.time}</span>
+                 <button className='btn btn-success' onClick={()=>ToggleComplete(task.id,task.done)}>
+                    {task.done?'completed':'Toggle Complete'}</button>
+                <button className='btn btn-danger' onClick={()=>deleteTask(task.id)}>Delete</button> 
+                <button className='btn btn-warning' onClick={()=>getEditItem(task.id)}>Edit</button>  
+              </div> */}
+
+                 
                     
-                </h4>
+                
 
                 
              
@@ -29,7 +47,7 @@ const TaskList = () => {
           ))}
        </>}
          
-          <button onClick={()=>console.log(state)}>show tasks</button>
+      
     </div>
   )
 }

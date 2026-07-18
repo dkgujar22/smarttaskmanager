@@ -11,8 +11,11 @@ const TaskInput = () => {
     const {state:taskstate,addItem,dispatch,task,setTask,priority,setPriority,handletableEdit,editid}=useTask();
    
     const handleAdd=async()=>{
+
         console.log(taskstate);
         await addItem(task,priority);
+        setTask('');
+        setPriority('');
     
         // dispatch({
         //     type:"ADD_TASK",
@@ -42,20 +45,26 @@ const TaskInput = () => {
 
 
   return (
-    <div >
+    <div className='container'>
 
         <h1>Smart Task Manager </h1>
-        <input type="text"
-        placeholder='Enter the Task'
-        value={task}
-        onChange={(e)=>setTask(e.target.value)} />
+        <div className="row">
+            <input type="text"
+            placeholder='Enter the Task'
+            value={task}
+            className='px-2 py-2 mb-2'
+            onChange={(e)=>setTask(e.target.value)} />
         
-        <input type="text"
-        placeholder='Enter priority'
-        value={priority}
+            <input type="text"
+            placeholder='Enter priority'
+            value={priority}
+            className='px-2 py-2 mb-2'
+            onChange={(e)=>setPriority(e.target.value)}/>
+            
         
-        onChange={(e)=>setPriority(e.target.value)}/>
-        {taskstate.setbutton?<button onClick={handleEdit}>EDIT</button>:<button onClick={handleAdd}>ADD</button>}
+        </div>
+        {taskstate.setbutton?<button type="button" className="btn btn-primary" onClick={handleEdit}>Edit Task</button>:<button type="button" className="btn btn-primary" onClick={handleAdd}>Add Task</button>}
+        
         
 
         {/* <button onClick={handletheme}>show theme</button> */}

@@ -11,6 +11,8 @@ const initialState={
 const newdate=new Date();
 const reducer=(state,action)=>{
     switch(action.type){
+        case "SET_TASK":
+            return {...state,tasks:action.payload};
         case "ADD_TASK":
 
             // return {
@@ -21,7 +23,7 @@ const reducer=(state,action)=>{
             //          priority:action.payload.priority,done:false}]
             // }
             return {
-                ...state,tasks:action.payload
+                ...state,tasks:[...state.tasks,action.payload]
             };
         case "TOGGLE_TASK":
             return {
@@ -70,7 +72,7 @@ export const TaskProvider=({children})=>{
                 type:"LOADING"
             })
             dispatch({
-            type:"ADD_TASK",
+            type:"SET_TASK",
             payload:data
             
         })
@@ -87,17 +89,26 @@ export const TaskProvider=({children})=>{
 
 
     const addItem=async(taskname,priority)=>{
-        const {data,error}=await supabase.from('tasklists').insert([{taskname,priority,time:new Date().toISOString(),done:false}])
 
+        dispatch({
+            type:"LOADING"
+        })
+        const {data,error}=await supabase.from('tasklists').insert([{taskname,priority,time:new Date().toISOString(),done:false}]).select();
         if(error){
             alert(error.message);
         }
+         
         else{
             dispatch({
+            type:"LOADING"
+        })
+            dispatch({
             type:"ADD_TASK",
-            payload:data
+            payload:data[0]
         })
         }
+        console.log(state.tasks);
+        
     }
 
     const deleteTask=async(taskid)=>{
@@ -138,15 +149,24 @@ export const TaskProvider=({children})=>{
      const handletableEdit=async(taskid,taskname,priority)=>{
 
         console.log(taskname,priority);
+
+
         
         const {error:updateError}=await supabase.from('tasklists').update({taskname,priority}).eq('id',taskid).select();
         if(updateError){
             alert(updateError.message);
         }
         const {data,error:fetchError}=await supabase.from('tasklists').select("*").order('id', {ascending:true});
+
+        dispatch({
+            type:"LOADING"
+        })
         dispatch({
             type:"EDIT_ROW",
             payload:data
+        })
+        dispatch({
+            type:"LOADING"
         })
         
 

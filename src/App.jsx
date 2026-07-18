@@ -18,7 +18,7 @@ function App() {
      {/* <h1>Task management system</h1> */}
      <TaskProvider>
       <ThemeProvider>
-        <div className='container-fluid text-center'>
+        <div className='container-fluid text-center' style={{margin:"0px"}}>
           <Setting/>
           <TaskInput/>
           <TaskList/>
