@@ -15,8 +15,7 @@ const reducer=(state,action)=>{
         case "SET_MODE":
             return {...state,mode:!state.mode};
         case "SET_LAYOUT":
-            console.log(state.layout);
-            return {...state,layout:!state.layout};
+            return {...state,layout: JSON.parse(action.payload)};
         case "SET_FONT":
             return {...state,uipref:action.payload}    
         default:

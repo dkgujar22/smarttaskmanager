@@ -45,7 +45,7 @@ const TaskInput = () => {
 
 
   return (
-    <div className='container'>
+    <div className='container' style={{marginTop:"50px"}}>
 
         <h1>Smart Task Manager </h1>
         <div className="row">
