@@ -3,8 +3,6 @@ import { useTask } from '../context/TaskContext';
 import { useTheme } from '../context/ThemeContext';
 
 const TaskInput = () => {
-    
-    
 
     const {state}=useTheme();
 
@@ -33,16 +31,7 @@ const TaskInput = () => {
         })
           setTask('')
         setPriority('')
-
-
-
-
-
     }
-
-   
-    
-
 
   return (
     <div className='container' style={{marginTop:"50px"}}>
@@ -52,13 +41,13 @@ const TaskInput = () => {
             <input type="text"
             placeholder='Enter the Task'
             value={task}
-            className='px-2 py-2 mb-2'
+            className={`px-2 py-2 mb-2 ${state.mode?'bg-dark text-white border border-white':'bg-white text-dark'}`}
             onChange={(e)=>setTask(e.target.value)} />
         
             <input type="text"
             placeholder='Enter priority'
             value={priority}
-            className='px-2 py-2 mb-2'
+            className={`px-2 py-2 mb-2 ${state.mode?'bg-dark text-white border border-white':'bg-white text-dark'}`}
             onChange={(e)=>setPriority(e.target.value)}/>
             
         

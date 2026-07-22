@@ -11,7 +11,7 @@ const TaskList = () => {
       {state.loading?<h1 style={{marginTop:"100px"}}>loading...</h1>:
        <>
         {state.tasks.map((task)=>(
-            <ul key={task.id} className={` list-group ${themestate.layout && 'col-md-3 justify-content-center'}`}>
+            <ul key={task.id} className={` list-group ${themestate.layout && 'col-md-3 justify-content-center'} `}>
 
               {/* <div className="row align-item-center">
                 
@@ -29,7 +29,7 @@ const TaskList = () => {
                    </div>
               </div>
               </div> */}
-              <li class="list-group-item">
+              <li className={`list-group-item ${themestate.mode ? 'bg-dark text-light border-white' : 'bg-white text-dark'}`}>
                 <div className={`${!themestate.layout && 'row g-2'}`}>
                   <div className={`${!themestate.layout &&  'col-md-6'}`}>
                     <div className="container">
